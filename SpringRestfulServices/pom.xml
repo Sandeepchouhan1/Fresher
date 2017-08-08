@@ -45,6 +45,13 @@
 			<artifactId>spring-core</artifactId>
 			<version>4.1.4.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0</version>
+			<scope>system</scope>
+			<systemPath>C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib\ojdbc6.jar</systemPath>
+		</dependency>
   </dependencies>
   <build>
     <finalName>SpringRestfulServices</finalName>
