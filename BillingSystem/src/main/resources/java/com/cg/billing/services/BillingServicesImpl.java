@@ -1,52 +1,46 @@
-*-*package com.cg.mobilebilling.services;
+package com.cg.billing.services;
 
 import java.util.List;
 
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.cg.mobilebilling.beans.Bill;
-import com.cg.mobilebilling.beans.Customer;
-import com.cg.mobilebilling.beans.Plan;
-import com.cg.mobilebilling.beans.PostpaidAccount;
-import com.cg.mobilebilling.daoservices.BillingDAOServices;
-import com.cg.mobilebilling.exceptions.BillDetailsNotFoundException;
-import com.cg.mobilebilling.exceptions.BillingServicesDownException;
-import com.cg.mobilebilling.exceptions.CustomerDetailsNotFoundException;
-import com.cg.mobilebilling.exceptions.InvalidBillMonthException;
-import com.cg.mobilebilling.exceptions.PlanDetailsNotFoundException;
-import com.cg.mobilebilling.exceptions.PostpaidAccountNotFoundException;
+import com.cg.billing.beans.Bill;
+import com.cg.billing.beans.Customer;
+import com.cg.billing.beans.Plan;
+import com.cg.billing.beans.PostpaidAccount;
+import com.cg.billing.dao.BillingDaoImpl;
+import com.cg.billing.exceptions.BillDetailsNotFoundException;
+import com.cg.billing.exceptions.BillingServicesDownException;
+import com.cg.billing.exceptions.CustomerDetailsNotFoundException;
+import com.cg.billing.exceptions.InvalidBillMonthException;
+import com.cg.billing.exceptions.PlanDetailsNotFoundException;
+import com.cg.billing.exceptions.PostpaidAccountNotFoundException;
 
 @Service
 @Transactional
-public class BillingServicesImpl implements BillingServices {
-
-
-	@Autowired
-	BillingDAOServices dao;
+public class BillingServicesImpl implements IBillingServices {
 	
+	@Autowired
+	BillingDaoImpl dao;
+
 	@Override
 	public List<Plan> getPlanAllDetails() throws BillingServicesDownException {
-		return dao.getAllPlans();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public int acceptCustomerDetails(Customer customer) throws BillingServicesDownException {
-		
-		dao.insertCustomer(customer);
-		return 0;
-	}
-
-	@Override
-	public long openPostpaidMobileAccount(int customerID, int planID)
+	public long openPostpaidMobileAccount(int customerID, int planid, PostpaidAccount account)
 			throws PlanDetailsNotFoundException, CustomerDetailsNotFoundException, BillingServicesDownException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int generateMonthlyMobileBill(int customerID, long mobileNo, String billMonth, int noOfLocalSMS,
-			int noOfStdSMS, int noOfLocalCalls, int noOfStdCalls, int internetDataUsageUnits)
+	public double generateMonthlyMobileBill(int customerID, long mobileNo, String billMonth, int noOfLocalSMS,
+			int noOfStdSMS, int noOfLocalCalls, int noOfStdCalls, int internetDataUsageUnits, int planId)
 			throws CustomerDetailsNotFoundException, PostpaidAccountNotFoundException, InvalidBillMonthException,
 			BillingServicesDownException, PlanDetailsNotFoundException {
 		// TODO Auto-generated method stub
@@ -90,8 +84,7 @@ public class BillingServicesImpl implements BillingServices {
 
 	@Override
 	public List<Bill> getCustomerPostPaidAccountAllBillDetails(int customerID, long mobileNo)
-			throws CustomerDetailsNotFoundException, PostpaidAccountNotFoundException, BillingServicesDownException,
-			BillDetailsNotFoundException {
+			throws CustomerDetailsNotFoundException, PostpaidAccountNotFoundException, BillingServicesDownException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -118,11 +111,24 @@ public class BillingServicesImpl implements BillingServices {
 	}
 
 	@Override
-	public Plan getCustomerPostPaidAccountPlanDetails(int customerID, long mobileNo)
+	public PostpaidAccount getCustomerPostPaidAccountPlanDetails(int customerID, long mobileNo)
 			throws CustomerDetailsNotFoundException, PostpaidAccountNotFoundException, BillingServicesDownException,
 			PlanDetailsNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
+	public Customer acceptCustomerDetails(Customer customer) throws BillingServicesDownException {
+		
+		return dao.insertCustomer(customer);
+	}
+
+	@Override
+	public boolean authenticateCustomer(Customer customer)
+			throws CustomerDetailsNotFoundException, BillingServicesDownException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
