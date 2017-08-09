@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -49,9 +50,10 @@ public class BillingDaoImpl implements IBillingDao{
 	}
 
 	@Override
-	public int insertPlan(Plan plan) throws PlanDetailsNotFoundException {
-		// TODO Auto-generated method stub
-		return 0;
+	public Plan insertPlan(Plan plan) throws PlanDetailsNotFoundException {
+		em.persist(plan);
+		em.flush();
+		return plan;
 	}
 
 	@Override
@@ -80,14 +82,15 @@ public class BillingDaoImpl implements IBillingDao{
 
 	@Override
 	public Customer getCustomer(int customerID) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Customer.class, customerID);
 	}
 
 	@Override
 	public List<Customer> getAllCustomers() {
-		// TODO Auto-generated method stub
-		return null;
+		Query qureyOne = em.createQuery("FROM Customer");
+		List<Customer> customerlist = qureyOne.getResultList();
+		return customerlist;
+		
 	}
 
 	@Override
@@ -115,9 +118,13 @@ public class BillingDaoImpl implements IBillingDao{
 	}
 
 	@Override
-	public void deleteCustomer(int customerID) {
-	Customer customer=em.find(Customer.class, customerID);
-		em.remove(customer);
+	public boolean deleteCustomer(int customerID) {
+
+	if(em.find(Customer.class, customerID)!= null)
+	{	em.remove(em.find(Customer.class, customerID));
+		return true;
+	}else
+		return false;
 	}
 
 }

@@ -19,7 +19,7 @@ public interface IBillingServices {
 	
 	//Customer acceptCustomerDetails(Customer customer) throws BillingServicesDownException;
 
-		long openPostpaidMobileAccount(int customerID,int planid,PostpaidAccount account) 
+		long openPostpaidMobileAccount(int customerID,int planid) 
 				throws PlanDetailsNotFoundException,CustomerDetailsNotFoundException,
 				BillingServicesDownException;
 		
@@ -57,7 +57,7 @@ public interface IBillingServices {
 				throws CustomerDetailsNotFoundException, PostpaidAccountNotFoundException, 
 				BillingServicesDownException;
 		
-		void deleteCustomer(int customerID) 
+		boolean deleteCustomer(int customerID) 
 				throws BillingServicesDownException, CustomerDetailsNotFoundException;
 		
 		PostpaidAccount getCustomerPostPaidAccountPlanDetails(int customerID, long mobileNo) 
@@ -67,7 +67,7 @@ public interface IBillingServices {
 		Customer acceptCustomerDetails(Customer customer)
 				throws BillingServicesDownException;
 
-		
+		Plan acceptPlanDetail(Plan plan) throws PlanDetailsNotFoundException;
 
 		boolean authenticateCustomer(Customer customer) throws CustomerDetailsNotFoundException, BillingServicesDownException;
 }

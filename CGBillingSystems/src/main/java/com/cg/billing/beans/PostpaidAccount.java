@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class PostpaidAccount {
@@ -20,7 +21,8 @@ public class PostpaidAccount {
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private long mobileNo;
 	
-	@Embedded
+	@OneToOne
+	@JoinColumn(name="planID")
 	private Plan plan;
 	
 	@ManyToOne
